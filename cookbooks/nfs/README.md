@@ -1,21 +1,14 @@
 nfs Cookbook
 ============
-TODO: Enter the cookbook description here.
+This Chef recipe allows to deploy the popular network file system, NFS.
 
-e.g.
-This cookbook makes your favorite breakfast sandwhich.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - nfs needs toaster to brown your bagel.
 
 Attributes
 ----------
-TODO: List you cookbook attributes here.
+These are the following attributes to need to be instantiated 
 
 e.g.
 #### nfs::default
@@ -27,26 +20,60 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['nfs']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['nfs']['master']</tt></td>
+    <td>String</td>
+    <td>Host name which is the head or master of the cluster</td>
+    <td><tt>"master"</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['nfs']['shareddir']</tt></td>
+    <td>String</td>
+    <td>Directory name which would be shared for different hosts</td>
+    <td><tt>"/shared"</tt></td>
   </tr>
 </table>
 
 Usage
 -----
 #### nfs::default
-TODO: Write usage instructions for each cookbook.
+When you use the default recipe you need to define the nfs.shareddir variable however this recipe needs to be invoked in conjunction with the master or client recipe.
 
 e.g.
-Just include `nfs` in your node's `run_list`:
+If you are invoking this recipe in your master role define 
 
 ```json
 {
-  "name":"my_node",
+  "name":"master",
+  "chef_type":"role",
+  "json_class":"Chef::Role",
+  "default_attributes": {
+	"nfs": {
+		"shareddir": "/shared"
+	}
+  },
   "run_list": [
-    "recipe[nfs]"
+    "recipe[nfs]",
+    "recipe[nfs::master]"
+  ]
+}
+```
+
+If you are invoking this recipe in your client role define 
+
+```json
+{
+  "name":"client",
+  "chef_type":"role",
+  "json_class":"Chef::Role",
+  "default_attributes": {
+	"nfs": {
+		"shareddir": "/shared",
+		"master": "master"
+	}
+  },
+  "run_list": [
+    "recipe[nfs]",
+    "recipe[nfs::client]"
   ]
 }
 ```
@@ -65,4 +92,4 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: John Sanabria 
