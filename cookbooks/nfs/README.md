@@ -43,7 +43,7 @@ If you are invoking this recipe in your master role define
 
 ```json
 {
-  "name":"master",
+  "name":"nfs-master",
   "chef_type":"role",
   "json_class":"Chef::Role",
   "default_attributes": {
@@ -62,7 +62,7 @@ If you are invoking this recipe in your client role define
 
 ```json
 {
-  "name":"client",
+  "name":"nfs-client",
   "chef_type":"role",
   "json_class":"Chef::Role",
   "default_attributes": {

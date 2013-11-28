@@ -1,3 +1,12 @@
+execute "update" do
+	user "root"
+	cwd "/tmp"
+	command "apt-get update"
+	action :run
+end
+package "nfs-common" do
+        action :install
+end
 template "/tmp/fstab.tmp" do
         source "fstab.erb"
         mode 0666
