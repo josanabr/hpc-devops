@@ -1,0 +1,8 @@
+{
+	"nfs": {
+		"shareddir": "/mirror"
+	},
+	"run_list": [
+		"role[nfs-master]"
+	]
+}
